@@ -19,8 +19,6 @@ services:
     image: nanomosfet/frontpage:latest
     user: "root"
     working_dir: /home/node/app
-    volumes:
-      - ./startbootstrap-freelancer/:/home/node/app/
     expose:
       - "3000"
     networks:
@@ -29,8 +27,6 @@ services:
     image: nanomosfet/surfmappage:latest
     user: "root"
     working_dir: /home/node/app
-    volumes:
-      - ./udacity-maps-project/:/home/node/app/
     expose:
       - "80"
     networks:
@@ -41,8 +37,6 @@ services:
       - "5000:5000"
     networks:
       - webnet
-    volumes:
-      - ./custom-form-creator/:/app
   ssl-grade-checker:
     image: nanomosfet/ssl-grade-checker
     networks:
@@ -54,8 +48,6 @@ services:
       - DBPASS=asdqwe123
       - DBNAME=sslgradechecker
       - DBUSER=postgres
-    volumes:
-      - ./ssl_grade_checker/:/app
     depends_on:
       - db-ssl-grade-checker
   db-ssl-grade-checker:
