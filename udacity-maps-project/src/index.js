@@ -1,10 +1,10 @@
 /*jshint esversion: 6 */
 import loadGoogleMapsApi from 'load-google-maps-api';
 import ko from 'knockout';
+import data from './data.json';
 
 const getSurfSpots = () => {
-    return fetch('http://api.spitcast.com/api/spot/all')
-        .then(res => res.json());
+    return new Promise((resolve, reject) => (resolve(data)));
 };
 class GoogleMaps {
     /*
