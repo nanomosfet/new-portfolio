@@ -1,0 +1,71 @@
+version: "3.2"
+services:
+  reverse-proxy:
+    image: nginx:stable
+    volumes:
+      - ./reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./reverse-proxy/cache/:/data/nginx/cache
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - webnet
+    depends_on:
+      - frontpage
+      - ssl-grade-checker
+      - custom-form-creator
+      - surfmappage
+  frontpage:
+    image: nanomosfet/frontpage:latest
+    user: "root"
+    working_dir: /home/node/app
+    volumes:
+      - ./startbootstrap-freelancer/:/home/node/app/
+    expose:
+      - "3000"
+    networks:
+      - webnet
+  surfmappage:
+    image: nanomosfet/surfmappage:latest
+    user: "root"
+    working_dir: /home/node/app
+    volumes:
+      - ./udacity-maps-project/:/home/node/app/
+    expose:
+      - "80"
+    networks:
+      - webnet
+  custom-form-creator:
+    image: nanomosfet/custom-form-creator
+    ports:
+      - "5000:5000"
+    networks:
+      - webnet
+    volumes:
+      - ./custom-form-creator/:/app
+  ssl-grade-checker:
+    image: nanomosfet/ssl-grade-checker
+    networks:
+      - webnet
+    expose:
+      - "5000"
+    environment:
+      - DBHOST=db-ssl-grade-checker
+      - DBPASS=asdqwe123
+      - DBNAME=sslgradechecker
+      - DBUSER=postgres
+    volumes:
+      - ./ssl_grade_checker/:/app
+    depends_on:
+      - db-ssl-grade-checker
+  db-ssl-grade-checker:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: asdqwe123
+      POSTGRES_DB: sslgradechecker
+    networks:
+      - webnet
+
+networks:
+  webnet:

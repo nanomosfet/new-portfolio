@@ -1,0 +1,7 @@
+@import '~bootstrap/scss/bootstrap';
+
+.active-question {
+    box-shadow: 3px 5px 3px $gray-500;
+    transition-property: box-shadow;
+    transition-duration: 0.1s;
+}

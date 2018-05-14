@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<title></title>
+	<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map, .container-fluid, .maprow {
+        height: 100%;
+      }
+
+      #nav {
+      	width:300px;
+      	z-index: 1;
+      	position: fixed;
+      	overflow-y: scroll;
+      	-webkit-transform: translate(-300px,0);
+    	transform: translate(-300px,0);
+    	transition: transform 0.3s ease;
+    	background-color: white;
+    	height: 100%;
+      }
+      #nav.open {
+      	-webkit-transform: translate(0,0);
+    	transform: translate(0,0);
+      }
+      #map {
+      	width: 100%;
+      }
+      .spot-item:hover {
+      	background-color: lightgrey;
+      }
+
+      .spot-item {
+      	text-decoration: none;
+      }
+
+      #menu {
+      	position: fixed;
+
+      	top: 70px;
+      	right: 10px;
+      	z-index: 2;
+      	background-color: white;
+      	border-radius: 5px;
+      	font-size: 20px;
+
+      }
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      li {
+        margin: 0px;
+        padding: 15px;
+        border-style: dotted;
+        border-bottom: none;
+      }
+      select {
+        width: 100%;
+        max-height: 40px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      @media screen and (min-width: 500px) {
+      	#nav {
+      		position: relative;
+      		-webkit-transform: none;
+    		  transform: none;
+          width: 29.9%
+      	}
+        #map {
+          width: 70%
+        }
+      	#menu {
+      		display: none;
+      	}
+      }
+      @media screen and (min-width: 1100px) {
+        #nav {
+          position: relative;
+          -webkit-transform: none;
+          transform: none;
+          width: 20%
+        }
+        #map {
+          width: 80%
+        }
+        #menu {
+          display: none;
+        }
+      }
+    </style>
+
+</head>
+<body>
+	<div class="container-fluid">
+			<div id="menu">
+				&#9776;
+			</div>
+		<div class="maprow row">
+			<div id="nav" class="nav">
+
+					<p>All surf spot data is form api.spitcast.com</p>
+
+					<select data-bind="
+					options: countyNames,
+					value: selectedCounty">
+
+					</select>
+					<ul data-bind="foreach: filteredSpots">
+						<li class="spot-item">
+							<span data-bind="
+								text: $data.spot_name,
+								click: $parent.ZoomToSpot">
+							</span>
+							<a href="#" data-bind="click: $parent.goToStreetView">Street View</a>
+						</li>
+
+					</ul>
+			</div>
+			<div id="map"></div>
+		</div>
+	</div>
+
+
+	<script src="surfmappage/bundle.js"></script>
+	<script type="text/javascript">
+		var menu = document.getElementById('menu');
+		var nav = document.getElementById('nav');
+		menu.addEventListener('click', function(e) {
+			nav.classList.toggle('open');
+			e.stopPropagation();
+		});
+	</script>
+
+</body>
+</html>
