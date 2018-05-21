@@ -1,0 +1,5 @@
+version: "3.2"
+services:
+  reverse-proxy:
+    volumes:
+      - ./reverse-proxy/nginx.dev.conf:/etc/nginx/nginx.conf:ro
