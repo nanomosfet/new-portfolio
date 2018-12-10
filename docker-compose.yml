@@ -16,6 +16,7 @@ services:
       - ssl-grade-checker
       - custom-form-creator
       - surfmappage
+      - jessica
   frontpage:
     image: nanomosfet/frontpage:latest
     user: "root"
@@ -59,6 +60,10 @@ services:
       POSTGRES_DB: sslgradechecker
     networks:
       - webnet
+  jessica:
+    image: nanomosfet/jessica-portfolio:latest
+    networks:
+     - webnet 
 
 networks:
   webnet:
